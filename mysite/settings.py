@@ -15,9 +15,7 @@ import os
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://postgres:postgres@127.0.0.1:5432/mysite'
-    )
+    'default': dj_database_url.config(conn_max_age=500)
 }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
