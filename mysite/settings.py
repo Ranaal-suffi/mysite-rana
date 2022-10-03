@@ -16,7 +16,7 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://ovgjuulpkodjen:7669d7c40f06195c6fadb83cb742d3cc535c64c8e3b53d5d05915aab9502155b@ec2-3-93-206-109.compute-1.amazonaws.com:5432/dd88d4b6fmegsf'
+        default='postgres://postgres:postgres@127.0.0.1:5432/mysite'
     )
 }
 
