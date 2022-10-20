@@ -1,10 +1,7 @@
-from distutils import text_file
-import email
-from turtle import title
 from django.conf import settings # Import Django's Loaded settings
 from django.db import models
 from django.utils import timezone
-from tomlkit import comment
+
 class PostQuerySet(models.QuerySet):
     def published(self):
         return self.filter(status=self.model.PUBLISHED)
@@ -33,7 +30,6 @@ class Post(models.Model):
         (DRAFT, 'draft'),
         (PUBLISHED, 'published'),
     ]
-    
     title = models.CharField(max_length=255)
     slug = models.SlugField(
         null=False,
