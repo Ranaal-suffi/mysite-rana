@@ -1,13 +1,10 @@
 from django.conf import settings # Import Django's Loaded settings
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth import get_user_model
+from django.db.models import Count
 
-class PostQuerySet(models.QuerySet):
-    def published(self):
-        return self.filter(status=self.model.PUBLISHED)
 
-    def drafts(self):
-        return self.filter(status=self.model.DRAFT)
 # Create your models here.
 class Topic(models.Model):
     name = models.CharField(
@@ -18,6 +15,21 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.name
+
+class PostQuerySet(models.QuerySet):
+    def published(self):
+        return self.filter(status=self.model.PUBLISHED)
+
+    def drafts(self):
+        return self.filter(status=self.model.DRAFT)
+
+    def get_authors(self):
+        User = get_user_model()
+        # Get the users who are authors of this queryset
+        return User.objects.filter(blog_posts__in=self).distinct()
+
+    def get_topics(self):
+        return Topic.objects.all().annotate(num_posts=Count('blog_posts')).order_by('-num_posts')
 
 
 class Post(models.Model):
@@ -108,6 +120,8 @@ class Comment(models.Model):
 
 class Meta:
     ordering = ['name','-created']
+
+
 
 
 
