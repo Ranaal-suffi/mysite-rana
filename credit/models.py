@@ -1,8 +1,10 @@
+"""Missing"""
 from django.conf import settings
 from django.db import models
 
 # Create your models here.
 class CreditRating(models.Model):
+    """Missing"""
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

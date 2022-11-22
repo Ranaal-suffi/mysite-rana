@@ -1,6 +1,7 @@
+"""missing"""
+import datetime as dt
 from model_mommy import mommy
 import pytest
-import datetime as dt
 from freezegun import freeze_time
 from blog.models import Post
 
@@ -9,6 +10,7 @@ pytestmark = pytest.mark.django_db
 @freeze_time(dt.datetime(2030, 6, 1, 12), tz_offset=0)  # Replaces now()
 @pytest.mark.django_db
 def test_publish_sets_published_to_current_datetime():
+    """Missing"""
     # Create a new post, and ensure no published datetime is set
     post = mommy.make('blog.Post', published=None)
     post.publish()
@@ -18,6 +20,7 @@ def test_publish_sets_published_to_current_datetime():
 
 @pytest.mark.django_db
 def test_published_posts_only_returns_those_with_published_status():
+    """Missing"""
     # Create a published Post by setting the status to "published"
     published = mommy.make('blog.Post', status=Post.PUBLISHED)
     # Create a draft Post
@@ -32,11 +35,13 @@ def test_published_posts_only_returns_those_with_published_status():
     assert result == expected
 @pytest.mark.django_db
 def test_publish_sets_status_to_published():
+    """Missing"""
     post = mommy.make('blog.Post', status=Post.DRAFT)
     post.publish()
     assert post.status == Post.PUBLISHED
 @pytest.mark.django_db
 def test_get_authors_returns_users_who_have_authored_a_post(django_user_model):
+    """Missing"""
     # Create a user
     author = mommy.make(django_user_model)
     # Create a post that is authored by the user
@@ -47,6 +52,7 @@ def test_get_authors_returns_users_who_have_authored_a_post(django_user_model):
 
 @pytest.mark.django_db
 def test_get_authors_returns_unique_users(django_user_model):
+    """Missing"""
     # Create a user
     author = mommy.make(django_user_model)
     # Create multiple posts. The _quantity argument can be used

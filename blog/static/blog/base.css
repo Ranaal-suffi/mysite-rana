@@ -71,15 +71,60 @@ a:hover {
 }
   
   /* Style the footer */
-#site-footer {
+#footer {
   font-size: 0.9rem;
-  background-color:rgb(244, 173, 247);
+  background-color:rgb(213, 214, 223);
   padding:100px;
-  margin-top:100px ;
+  margin: top 100px;
 }  
+
 #logo{
   width: 500px;
   height: 500px;
   box-shadow:5px 5px 10px rgb(244,173, 247);
+}
+/* Post preview */
+.post-preview {
+  border-bottom: 1px #eee solid;
+}
+.post-preview h2 {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.post-preview time {
+  color: rgb(185, 38, 38);
+}
+
+.post-preview section {
+  margin: 1rem 0;
+}
+
+/* Post detail article */
+#post-detail-article h1 {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#post-detail-article .author {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: rgb(68, 3, 247);
+}
+
+#post-detail-article .published {
+  color: rgb(80, 4, 4);
+  font-size: 0.9rem;
+}
+
+#post-detail-article .content {
+  margin: 2rem 0;
+}
+
+#topic-detail-article h1{
+  color: rgb(2, 19, 66); 
+}
+#topic-detail-article p {
+  color: rgb(2, 19, 66);
 }
 

@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+<p><a href="{{ topic.get_absolute_url }}">Read more &rarr; </a></p>
+
+<!-- {# blog/templates/blog/post_detail.html #} -->
+{% block page_title %}{{ post.title }}{% endblock %}
+
+{% block main %}
+<article id="topic-detail-article">
+  <h1>{{ topic.name }}</h1>
+  <p>{{topic.num_posts}} Posts</p>
+  <section class="content">
+    
+    {% for post in posts %}
+    <p>{{ post.title }}</p>
+    <span class="published">Published <time>{{ post.published }}</time></span><br>
+    <span class="author">{{ post.author.get_full_name }}</span>
+    <p><a href="{{ post.get_absolute_url }}">Read more &rarr;</a></p>
+  {% endfor %}
+
+  </section>
+</article>
+{% endblock %}

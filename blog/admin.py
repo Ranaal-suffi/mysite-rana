@@ -1,9 +1,11 @@
+"""missing"""
 from django.contrib import admin
 from . import models
-
 class CommentInlineAdmin(admin.StackedInline):
+    """missing"""
     model= models.Comment
 class PostAdmin(admin.ModelAdmin):
+    """missing"""
     list_display = [
         'title',
         'author',
@@ -22,12 +24,11 @@ class PostAdmin(admin.ModelAdmin):
         'author__last_name'
     ]
     inlines= [CommentInlineAdmin]
-
 # Register the `Post` model
 admin.site.register(models.Post, PostAdmin)
-
 @admin.register(models.Topic)
 class TopicAdmin(admin.ModelAdmin):
+    """missing"""
     list_display = (
         'name',
         'slug',
@@ -35,10 +36,11 @@ class TopicAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 @admin.register(models.Comment)
 class CommentAdmin(admin.ModelAdmin):
+    """missing"""
     list_display =(
         "name",
         "email",
         "content",
         "post"
-    )   
-    
+    )
+     

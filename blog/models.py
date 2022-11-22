@@ -1,12 +1,15 @@
+"""missing"""
 from django.conf import settings # Import Django's Loaded settings
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-from django.db.models import Count
+#from django.db.models import Count
+from django.urls import reverse
 
 
 # Create your models here.
 class Topic(models.Model):
+    """missing"""
     name = models.CharField(
         max_length=50,
         unique=True  # No duplicates!
@@ -14,22 +17,37 @@ class Topic(models.Model):
     slug = models.SlugField(unique=True)
 
     def __str__(self):
+        """missing"""
         return self.name
+    def get_absolute_url(self):
+        """missing"""
+        return reverse(
+            'topic-detail',
+            kwargs={
+                'slug': self.slug
+            })
+    def get_posts(self):
+        """Missing"""
+        return self.blog_posts.all()
 
 class PostQuerySet(models.QuerySet):
+    """missing"""
     def published(self):
+        """Missing"""
         return self.filter(status=self.model.PUBLISHED)
 
     def drafts(self):
+        """missing"""
         return self.filter(status=self.model.DRAFT)
 
     def get_authors(self):
+        """missing"""
         User = get_user_model()
         # Get the users who are authors of this queryset
         return User.objects.filter(blog_posts__in=self).distinct()
 
-    def get_topics(self):
-        return Topic.objects.all().annotate(num_posts=Count('blog_posts')).order_by('-num_posts')
+    #def get_topics(self):
+        #return Topic.objects.all().annotate(num_posts=Count('blog_posts')).order_by('-num_posts')
 
 
 class Post(models.Model):
@@ -74,26 +92,29 @@ class Post(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)  # Sets on create
     updated = models.DateTimeField(auto_now=True)  # Updates on each save
-
     objects = PostQuerySet.as_manager()
-
-    #comment=models.ForeignKey(
-        #Comment,
-        #on_delete=models.PROTECT,
-        #related_name='blog_posts',
-        #null= False,
-        #blank = False
-    #)
-    
     def __str__(self):
-       return str(self.title)
-    
+        return str(self.title)
     def publish(self):
         """Publishes this post"""
         self.status = self.PUBLISHED
         self.published = timezone.now()  # The current datetime with timezone
+    def get_absolute_url(self):
+        """missing"""
+        if self.published:
+            kwargs = {
+                'year': self.published.year,
+                'month': self.published.month,
+                'day': self.published.day,
+                'slug': self.slug
+            }
+        else:
+            kwargs = {'pk': self.pk}
+
+        return reverse('post-detail', kwargs=kwargs)
 
 class Comment(models.Model):
+    """Missing"""
     post= models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
@@ -111,22 +132,10 @@ class Comment(models.Model):
         null=True,
         blank=True,
         help_text ='The date & time this comment was published',)
-    #created = models.DateTimeField(auto_now_add=True)  # Sets on create
-    #updated = models.DateTimeField(auto_now=True)  # Updates on each save
-    #class Meta:
-        #ordering = ['created_on']
+
     def __str__(self):
         return str(self.content)
 
 class Meta:
+    """Missing"""
     ordering = ['name','-created']
-
-
-
-
-
-
-
-
-
-

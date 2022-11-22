@@ -3,9 +3,8 @@ new application
 """
 from django.http import HttpResponse
 
-def index(request):
+def index(_request):
     """
     Main application
     """
     return HttpResponse('Hello world!')
-

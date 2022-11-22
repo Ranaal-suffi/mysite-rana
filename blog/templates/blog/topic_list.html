@@ -1,0 +1,13 @@
+{% extends "blog/base.html" %}
+{% block title %}Topics{% endblock %}
+{% block main %}
+<h1>Topics</h1>
+{% for topic in object_list %}
+  <article class="Topic.name">
+    <a href={{ topic.get_absolute_url}}><li>{{ topic.name }}</a></li>
+    <section class="teaser">
+      <!----{{ Topics|truncatewords:20 }}-->
+    </section>
+  </article>
+{% endfor %}
+{% endblock %}
