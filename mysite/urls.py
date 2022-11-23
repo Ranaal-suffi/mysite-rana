@@ -39,6 +39,12 @@ urlpatterns = [
     path('topics/', views.TopicListView.as_view(), name='topic-list'),
     path('topics/<slug:slug>/',views.TopicDetailView.as_view(),name='topic-detail'),
     path('topics/<int:pk>/',views.TopicDetailView.as_view(),name='topic-detail'),
+    path('form-example/', views.form_example, name='form-example'),
+    path(
+        'formview-example/',
+        views.FormViewExample.as_view(),
+        name='formview-example'
+    ),
 ]
 
 

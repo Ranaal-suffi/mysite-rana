@@ -13,10 +13,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://postgres:postgres@127.0.0.1:5432/mysite'
+        default=env('DATABASE_URL')
     )
 }
 
