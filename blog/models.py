@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 #from django.db.models import Count
 from django.urls import reverse
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 # Create your models here.
@@ -67,6 +68,11 @@ class Post(models.Model):
         unique_for_date='published', # Slug is unique for publication date
         blank = False,
     )
+    banner = models.ImageField(
+        blank=True,
+        null=True,
+        help_text='A banner image for the post'
+    )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, #The Django auth user model
         on_delete=models.PROTECT, # Prevent posts from being deleted
@@ -84,7 +90,8 @@ class Post(models.Model):
         Topic,
         related_name='blog_posts'
     )
-    content = models.TextField()
+    
+    content = RichTextUploadingField()
     published = models.DateTimeField(
         null=True,
         blank=True,
@@ -93,6 +100,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)  # Sets on create
     updated = models.DateTimeField(auto_now=True)  # Updates on each save
     objects = PostQuerySet.as_manager()
+
     def __str__(self):
         return str(self.title)
     def publish(self):
@@ -136,6 +144,34 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.content)
 
+
+class Contact(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    message = models.TextField()
+    submitted = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text ='The date & time this artiicle was published',)
+    #submitted = models.DateTimeField(auto_now_add=True)
+
+    #class Meta:
+        #ordering = ['-submitted']
+
+    def __str__(self):
+        return f'{self.submitted.date()}: {self.email}'
+class PhotoContest(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    banner = models.ImageField(
+        blank=True,
+        null=True,
+        help_text='A banner image for the contest')
+    submitted = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f'{self.submitted.date()}: {self.email}'
 class Meta:
     """Missing"""
-    ordering = ['name','-created']
+    ordering = ['name','-created','-submitted']

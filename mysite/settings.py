@@ -34,7 +34,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-&e0&i9xr03go)fisood*5=wn8(!ka==44efco&ox-t)s+w!o)2"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+# Read the DEBUG environment variable. Default to "1" for True.
+DEBUG = int(os.environ.get('DEBUG', '1'))
 
 ALLOWED_HOSTS = ['*']
 
@@ -50,6 +53,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "blog",
     "credit",
+    'ckeditor',
+    'ckeditor_uploader'
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -122,3 +127,7 @@ STATICFILES_DIRS = [ os.path.join (BASE_DIR, "static") ]
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CKEDITOR_UPLOAD_PATH = 'uploads/'

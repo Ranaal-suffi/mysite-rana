@@ -6,6 +6,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from . import forms, models
 from django.views.generic import DetailView, FormView, ListView
+from django.views.generic import DetailView, CreateView, FormView, ListView
 from django.urls import reverse_lazy
 from django.contrib import messages
 
@@ -123,10 +124,23 @@ def form_example(request):
 
     # Return if either an invalid POST or a GET
     return render(request, 'blog/form_example.html', context={'form': form})
-class FormViewExample(FormView):
-    template_name = 'blog/form_example.html'
-    form_class = forms.ExampleSignupForm
+class ContactFormView(CreateView):
+    model = models.Contact
     success_url = reverse_lazy('home')
+    fields = [
+        'first_name',
+        'last_name',
+        'email',
+        'message',
+    ]
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            'Thank you! Your message has been sent.'
+        )
+        return super().form_valid(form)
 
 class FormViewExample(FormView):
     template_name = 'blog/form_example.html'
@@ -141,4 +155,23 @@ class FormViewExample(FormView):
             'Thank you for signing up!'
         )
         # Continue with default behaviour
+        return super().form_valid(form)
+
+class PhotoContestView(CreateView):
+    model = models.PhotoContest
+    template_name = 'blog/photocontest_form.html'
+    success_url = reverse_lazy('home')
+    fields = [
+        'first_name',
+        'last_name',
+        'email',
+        #'A banner image for the post',
+    ]
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            'Thank you! Your photo has been submitted.'
+        )
         return super().form_valid(form)

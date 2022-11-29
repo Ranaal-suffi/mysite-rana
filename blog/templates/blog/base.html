@@ -33,7 +33,8 @@
                 <li><a href="{% url "about" %}">About</a></li>
                 <li><a href="{% url "post-list" %}">Posts</a></li>
                 <li><a href="{% url "topic-list"%}">Topics</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{% url "photo-contest"%}">Photo Cotest</a></li>
+                <li><a href="{% url "contact" %}">Contact</a></li>
             </ul>
         </nav>
         <main id="main-content">
@@ -71,5 +72,6 @@
             <a href="{% url "terms-and-conditions" %}">Terms & conditions</a>
           </div>
         </footer> 
+        </div>
     </body>
 </html>
