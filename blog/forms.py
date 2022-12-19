@@ -1,4 +1,5 @@
 from django import forms
+from . import models
 
 
 class NameForm(forms.Form):
@@ -33,4 +34,20 @@ class PhotoContestForm(forms.Form):
     receive_newsletter = forms.BooleanField(
         required=False,
         label='Do you wish to receive our newsletter?'
-    )    
+    )   
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = models.Comment
+        fields = [
+            'post',
+            'name',
+            'email',
+            'content',
+        ]
+        labels = {
+            'content': 'Comment'
+        }
+        widgets = {
+            'post': forms.HiddenInput()
+        } 

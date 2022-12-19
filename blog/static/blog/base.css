@@ -197,3 +197,14 @@ p{
   display: block;
   margin: 0 auto;
 }
+
+.comments {
+  border-top: 1px solid #eee;
+  font-size: 0.8rem;
+  margin-top: 5rem;
+}
+
+.comments .by-line {
+  color: #666;
+  font-weight: 600;
+}

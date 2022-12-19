@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 #from django.db.models import Count
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.db.models.query import QuerySet
 
 
 # Create your models here.
@@ -121,6 +122,22 @@ class Post(models.Model):
 
         return reverse('post-detail', kwargs=kwargs)
 
+class CommentQuerySet(models.QuerySet):
+    """missing"""
+    def published(self):
+        """Missing"""
+        return self.filter(status=self.model.PUBLISHED)
+
+    def drafts(self):
+        """missing"""
+        return self.filter(status=self.model.DRAFT)
+
+    def get_authors(self):
+        """missing"""
+        User = get_user_model()
+        # Get the users who are authors of this queryset
+        return User.objects.filter(blog_comments__in=self).distinct()
+
 class Comment(models.Model):
     """Missing"""
     post= models.ForeignKey(
@@ -130,19 +147,24 @@ class Comment(models.Model):
         null= True,
         blank = True
         )
-    approved = models.BooleanField(
-        default = False
-    )
+    #approved = models.BooleanField(default = False)
     name= models.CharField( max_length= 10)
     email = models.EmailField()
     content = models.TextField(max_length=200)
+    approved = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    objects = CommentQuerySet.as_manager()
     published = models.DateTimeField(
         null=True,
         blank=True,
         help_text ='The date & time this comment was published',)
 
     def __str__(self):
-        return str(self.content)
+        return f'{self.name} re: {self.post}'
+
+    class Meta:
+        ordering = ['-created']
 
 
 class Contact(models.Model):

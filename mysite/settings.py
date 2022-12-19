@@ -54,7 +54,9 @@ INSTALLED_APPS = [
     "blog",
     "credit",
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'rest_framework',
+    'api',
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
